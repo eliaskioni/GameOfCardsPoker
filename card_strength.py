@@ -67,3 +67,8 @@ class CardStrength(object):
 
     def is_full_house(self):
         return self.cards_of_the_same_rank(3) and self.cards_of_the_same_rank(2)
+
+    def is_flush(self):
+        if self.cards_in_sequence(self.cards):
+            return False
+        return self.is_same_suit(self.cards)

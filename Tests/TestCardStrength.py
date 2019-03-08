@@ -169,3 +169,26 @@ class TestStraightHand(TestCase):
 
     def test_is_straight_returns_false_for_valid_flush_hand(self):
         self.assertFalse(self.not_valid_straight_hand_strength.is_straight())
+
+
+class TestThreeOfAKind(TestCase):
+
+    def setUp(self):
+        self.straight_hand: list = [Card(rank=Ranks.Q.value, suit=Suits.SPADES.value),
+                                    Card(rank=Ranks.Q.value, suit=Suits.HEARTS.value),
+                                    Card(rank=Ranks.Q.value, suit=Suits.DIAMONDS.value),
+                                    Card(rank=Ranks.FIVE.value, suit=Suits.SPADES.value),
+                                    Card(rank=Ranks.NINE.value, suit=Suits.CLUBS.value)]
+
+        self.not_straight_hand: list = [Card(rank=Ranks.Q.value, suit=Suits.HEARTS.value),
+                                        Card(rank=Ranks.J.value, suit=Suits.HEARTS.value),
+                                        Card(rank=Ranks.TEN.value, suit=Suits.HEARTS.value),
+                                        Card(rank=Ranks.NINE.value, suit=Suits.HEARTS.value),
+                                        Card(rank=Ranks.EIGHT.value, suit=Suits.HEARTS.value)]
+
+        self.hand_strength = CardStrength(self.straight_hand)
+
+        self.not_valid_three_of_a_kind_hand_strength = CardStrength(self.not_straight_hand)
+
+    def test_is_three_of_a_kind_returns_true_for_valid_three_of_a_kind_hand(self):
+        self.assertTrue(self.hand_strength.is_three_of_a_kind())

@@ -52,10 +52,10 @@ class CardStrength(object):
             return False
         return True
 
-    def cards_of_the_same_rank(self, number_of_cards):
+    def cards_of_the_same_rank(self, number_of_cards, groups=2):
         counter = Counter()
         ranks = CardStrength.get_ranks_in_hand(self.cards)
-        if not len(set(ranks)) == 2:
+        if not len(set(ranks)) == groups:
             return False
         for rank in ranks:
             counter[rank] += 1
@@ -83,3 +83,6 @@ class CardStrength(object):
         if not self.cards_in_sequence(self.cards):
             return False
         return self.cards_of_the_same_suit(2)
+
+    def is_three_of_a_kind(self):
+        return self.cards_of_the_same_rank(number_of_cards=3, groups=3)

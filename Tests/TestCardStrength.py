@@ -93,3 +93,27 @@ class TestFourOfAKind(TestCase):
     def test_is_four_of_kind_returns_false_for_invalid_four_of_a_kind_hand(self):
         self.assertFalse(self.invalid_four_of_kind_hand_strength.is_four_of_a_kind())
 
+
+class TestFullHouse(TestCase):
+    def setUp(self):
+        self.full_house_hand: list = [Card(rank=Ranks.K.value, suit=Suits.HEARTS.value),
+                                      Card(rank=Ranks.K.value, suit=Suits.DIAMONDS.value),
+                                      Card(rank=Ranks.K.value, suit=Suits.SPADES.value),
+                                      Card(rank=Ranks.FIVE.value, suit=Suits.HEARTS.value),
+                                      Card(rank=Ranks.FIVE.value, suit=Suits.CLUBS.value)]
+
+        self.not_full_house_hand: list = [Card(rank=Ranks.K.value, suit=Suits.HEARTS.value),
+                                          Card(rank=Ranks.K.value, suit=Suits.DIAMONDS.value),
+                                          Card(rank=Ranks.SEVEN.value, suit=Suits.SPADES.value),
+                                          Card(rank=Ranks.FIVE.value, suit=Suits.HEARTS.value),
+                                          Card(rank=Ranks.FIVE.value, suit=Suits.CLUBS.value)]
+
+        self.hand_strength = CardStrength(self.full_house_hand)
+
+        self.not_valid_full_house_hand = CardStrength(self.not_full_house_hand)
+
+    def test_is_full_house_returns_true_for_valid_full_house_hand(self):
+        self.assertTrue(self.hand_strength.is_full_house())
+
+    def test_not_is_full_house_returns_true_for_valid_full_house_hand(self):
+        self.assertFalse(self.not_valid_full_house_hand.is_full_house())

@@ -1,3 +1,6 @@
+from constants import Suits, LOWEST_CARD_RANK, HIGHEST_CARD_RANK
+
+
 class Card(object):
 
     def __init__(self, rank, suit):
@@ -8,12 +11,15 @@ class Card(object):
 
     @staticmethod
     def validate_rank(rank):
-        if 2 <= rank <= 14:
+        if LOWEST_CARD_RANK <= rank <= HIGHEST_CARD_RANK:
             return True
         raise Exception
 
     @staticmethod
     def validate_suit(suit):
-        if suit in ['C', 'S', 'H', 'D']:
+        if suit in [Suits.CLUBS.value,
+                    Suits.HEARTS.value,
+                    Suits.SPADES.value,
+                    Suits.DIAMONDS.value]:
             return True
         raise Exception

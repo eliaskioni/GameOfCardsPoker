@@ -52,14 +52,19 @@ class CardStrength(object):
             return False
         return True
 
-    def cards_of_the_same_rank(self, number_of_cards, groups=2):
+    @staticmethod
+    def group_ranks_based_on_rank(ranks):
         counter = Counter()
+        for rank in ranks:
+            counter[rank] += 1
+        return counter
+
+    def cards_of_the_same_rank(self, number_of_cards, groups=2):
         ranks = CardStrength.get_ranks_in_hand(self.cards)
         if not len(set(ranks)) == groups:
             return False
-        for rank in ranks:
-            counter[rank] += 1
-        return number_of_cards in counter.values()
+        grouped_ranks = CardStrength.group_ranks_based_on_rank(ranks)
+        return number_of_cards in grouped_ranks.values()
 
     def cards_of_the_same_suit(self, number_of_suits):
         counter = Counter()
@@ -86,3 +91,16 @@ class CardStrength(object):
 
     def is_three_of_a_kind(self):
         return self.cards_of_the_same_rank(number_of_cards=3, groups=3)
+
+    def is_two_pair(self):
+        if not self.cards_of_the_same_rank(number_of_cards=2, groups=3):
+            return False
+        ranks = CardStrength.get_ranks_in_hand(self.cards)
+        grouped_ranks = CardStrength.group_ranks_based_on_rank(ranks)
+        if not min(grouped_ranks.values()) == 1:
+            return False
+        if not list(grouped_ranks.values()).count(1) == 1:
+            return False
+
+        return list(grouped_ranks.values()).count(2) == 2
+

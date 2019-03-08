@@ -67,3 +67,29 @@ class TestStraightFlush(TestCase):
 
     def test_straight_flush_returns_false_on_hand_that_not_valid_for_straight_hand(self):
         self.assertFalse(self.not_valid_straight_hand_strength.is_straight_flush())
+
+
+class TestFourOfAKind(TestCase):
+    def setUp(self):
+        self.four_of_a_kind_hand: list = [Card(rank=Ranks.FIVE.value, suit=Suits.DIAMONDS.value),
+                                          Card(rank=Ranks.FIVE.value, suit=Suits.SPADES.value),
+                                          Card(rank=Ranks.FIVE.value, suit=Suits.HEARTS.value),
+                                          Card(rank=Ranks.FIVE.value, suit=Suits.CLUBS.value),
+                                          Card(rank=Ranks.THREE.value, suit=Suits.HEARTS.value)]
+
+        self.invalid_four_of_a_kind_hand: list = [Card(rank=Ranks.FIVE.value, suit=Suits.DIAMONDS.value),
+                                                  Card(rank=Ranks.FIVE.value, suit=Suits.SPADES.value),
+                                                  Card(rank=Ranks.FIVE.value, suit=Suits.HEARTS.value),
+                                                  Card(rank=Ranks.THREE.value, suit=Suits.CLUBS.value),
+                                                  Card(rank=Ranks.THREE.value, suit=Suits.HEARTS.value)]
+
+        self.hand_strength = CardStrength(self.four_of_a_kind_hand)
+
+        self.invalid_four_of_kind_hand_strength = CardStrength(self.invalid_four_of_a_kind_hand)
+
+    def test_is_four_of_kind_returns_true_for_valid_four_of_a_kind_hand(self):
+        self.assertTrue(self.hand_strength.is_four_of_a_kind())
+
+    def test_is_four_of_kind_returns_false_for_invalid_four_of_a_kind_hand(self):
+        self.assertFalse(self.invalid_four_of_kind_hand_strength.is_four_of_a_kind())
+

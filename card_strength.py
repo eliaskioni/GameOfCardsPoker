@@ -23,6 +23,10 @@ class CardStrength(object):
         return [card.rank for card in cards]
 
     @staticmethod
+    def get_suits_in_hands(cards):
+        return [card.suit for card in cards]
+
+    @staticmethod
     def cards_in_sequence(cards):
         card_ranks = CardStrength.get_ranks_in_hand(cards)
         expected_ranks = list(range(cards[0].rank, cards[4].rank - 1, -1))
@@ -55,12 +59,14 @@ class CardStrength(object):
             return False
         for rank in ranks:
             counter[rank] += 1
-        groups_of_ranks = list(set(ranks))
-        if counter.get(groups_of_ranks[0]) == number_of_cards:
-            return True
-        if counter.get(groups_of_ranks[1]) == number_of_cards:
-            return True
-        return False
+        return number_of_cards in counter.values()
+
+    def cards_of_the_same_suit(self, number_of_suits):
+        counter = Counter()
+        suits = CardStrength.get_suits_in_hands(self.cards)
+        for suit in suits:
+            counter[suit] += 1
+        return number_of_suits in counter.values()
 
     def is_four_of_a_kind(self):
         return self.cards_of_the_same_rank(4)
@@ -72,3 +78,8 @@ class CardStrength(object):
         if self.cards_in_sequence(self.cards):
             return False
         return self.is_same_suit(self.cards)
+
+    def is_straight(self):
+        if not self.cards_in_sequence(self.cards):
+            return False
+        return self.cards_of_the_same_suit(2)

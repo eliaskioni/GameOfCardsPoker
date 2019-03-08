@@ -143,3 +143,29 @@ class TestFlush(TestCase):
 
     def test_is_flush_returns_false_for_invalid_flush_hand(self):
         self.assertFalse(self.not_valid_flush_hand_strength.is_flush())
+
+
+class TestStraightHand(TestCase):
+
+    def setUp(self):
+        self.straight_hand: list = [Card(rank=Ranks.Q.value, suit=Suits.HEARTS.value),
+                                    Card(rank=Ranks.J.value, suit=Suits.DIAMONDS.value),
+                                    Card(rank=Ranks.TEN.value, suit=Suits.CLUBS.value),
+                                    Card(rank=Ranks.NINE.value, suit=Suits.SPADES.value),
+                                    Card(rank=Ranks.EIGHT.value, suit=Suits.HEARTS.value)]
+
+        self.not_straight_hand: list = [Card(rank=Ranks.Q.value, suit=Suits.HEARTS.value),
+                                        Card(rank=Ranks.J.value, suit=Suits.HEARTS.value),
+                                        Card(rank=Ranks.TEN.value, suit=Suits.HEARTS.value),
+                                        Card(rank=Ranks.NINE.value, suit=Suits.HEARTS.value),
+                                        Card(rank=Ranks.EIGHT.value, suit=Suits.HEARTS.value)]
+
+        self.hand_strength = CardStrength(self.straight_hand)
+
+        self.not_valid_straight_hand_strength = CardStrength(self.not_straight_hand)
+
+    def test_is_straight_returns_true_for_valid_flush_hand(self):
+        self.assertTrue(self.hand_strength.is_straight())
+
+    def test_is_straight_returns_false_for_valid_flush_hand(self):
+        self.assertFalse(self.not_valid_straight_hand_strength.is_straight())

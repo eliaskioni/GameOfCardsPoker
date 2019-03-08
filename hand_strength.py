@@ -1,11 +1,13 @@
 from constants import Ranks
 from collections import Counter
+from hand import Hand
 
 
-class CardStrength(object):
+class HandStrength(object):
 
-    def __init__(self, cards: list):
-        self.cards = cards
+    def __init__(self, hand: Hand):
+        self.hand = hand
+        self.cards = hand.cards
 
     @staticmethod
     def is_same_suit(cards):
@@ -28,7 +30,7 @@ class CardStrength(object):
 
     @staticmethod
     def cards_in_sequence(cards):
-        card_ranks = CardStrength.get_ranks_in_hand(cards)
+        card_ranks = HandStrength.get_ranks_in_hand(cards)
         expected_ranks = list(range(cards[0].rank, cards[4].rank - 1, -1))
         return card_ranks == expected_ranks
 
@@ -38,7 +40,7 @@ class CardStrength(object):
             return False
         if not self.cards_in_sequence(cards):
             return False
-        ranks = CardStrength.get_ranks_in_hand(cards)
+        ranks = HandStrength.get_ranks_in_hand(cards)
         expected_ranks = [Ranks.A.value, Ranks.K.value, Ranks.Q.value, Ranks.J.value, Ranks.TEN.value]
         return expected_ranks == ranks
 
@@ -60,15 +62,15 @@ class CardStrength(object):
         return counter
 
     def cards_of_the_same_rank(self, number_of_cards, groups=2):
-        ranks = CardStrength.get_ranks_in_hand(self.cards)
+        ranks = HandStrength.get_ranks_in_hand(self.cards)
         if not len(set(ranks)) == groups:
             return False
-        grouped_ranks = CardStrength.group_ranks_based_on_rank(ranks)
+        grouped_ranks = HandStrength.group_ranks_based_on_rank(ranks)
         return number_of_cards in grouped_ranks.values()
 
     def cards_of_the_same_suit(self, number_of_suits):
         counter = Counter()
-        suits = CardStrength.get_suits_in_hands(self.cards)
+        suits = HandStrength.get_suits_in_hands(self.cards)
         for suit in suits:
             counter[suit] += 1
         return number_of_suits in counter.values()
@@ -95,8 +97,8 @@ class CardStrength(object):
     def is_two_pair(self):
         if not self.cards_of_the_same_rank(number_of_cards=2, groups=3):
             return False
-        ranks = CardStrength.get_ranks_in_hand(self.cards)
-        grouped_ranks = CardStrength.group_ranks_based_on_rank(ranks)
+        ranks = HandStrength.get_ranks_in_hand(self.cards)
+        grouped_ranks = HandStrength.group_ranks_based_on_rank(ranks)
         if not min(grouped_ranks.values()) == 1:
             return False
         if not list(grouped_ranks.values()).count(1) == 1:
@@ -107,8 +109,8 @@ class CardStrength(object):
     def is_one_pair(self):
         if not self.cards_of_the_same_rank(number_of_cards=2, groups=4):
             return False
-        ranks = CardStrength.get_ranks_in_hand(self.cards)
-        grouped_ranks = CardStrength.group_ranks_based_on_rank(ranks)
+        ranks = HandStrength.get_ranks_in_hand(self.cards)
+        grouped_ranks = HandStrength.group_ranks_based_on_rank(ranks)
         return list(grouped_ranks.values()).count(1) == 3
 
     def is_high_card(self):

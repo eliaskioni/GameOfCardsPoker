@@ -239,8 +239,34 @@ class TestOnePair(TestCase):
 
         self.not_valid_one_pair_hand_strength = CardStrength(self.not_one_pair_hand)
 
-    def test_is_one_pair_returns_true_for_valid_two_pair_hand(self):
+    def test_is_one_pair_returns_true_for_valid_one_pair_hand(self):
         self.assertTrue(self.hand_strength.is_one_pair())
 
-    def test_is_one_pair_returns_false_for_invalid_two_pair_hand(self):
+    def test_is_one_pair_returns_false_for_invalid_one_pair_hand(self):
         self.assertFalse(self.not_valid_one_pair_hand_strength.is_one_pair())
+
+
+class TestHighCard(TestCase):
+
+    def setUp(self):
+        self.high_card_hand: list = [Card(rank=Ranks.A.value, suit=Suits.DIAMONDS.value),
+                                     Card(rank=Ranks.SEVEN.value, suit=Suits.HEARTS.value),
+                                     Card(rank=Ranks.FIVE.value, suit=Suits.CLUBS.value),
+                                     Card(rank=Ranks.THREE.value, suit=Suits.DIAMONDS.value),
+                                     Card(rank=Ranks.TWO.value, suit=Suits.SPADES.value)]
+
+        self.not_high_card_hand: list = [Card(rank=Ranks.A.value, suit=Suits.CLUBS.value),
+                                         Card(rank=Ranks.A.value, suit=Suits.DIAMONDS.value),
+                                         Card(rank=Ranks.NINE.value, suit=Suits.HEARTS.value),
+                                         Card(rank=Ranks.SIX.value, suit=Suits.SPADES.value),
+                                         Card(rank=Ranks.FOUR.value, suit=Suits.DIAMONDS.value)]
+
+        self.hand_strength = CardStrength(self.high_card_hand)
+
+        self.not_valid_one_pair_hand_strength = CardStrength(self.not_high_card_hand)
+
+    def test_is_high_hand_returns_true_for_valid_high_card_hand(self):
+        self.assertTrue(self.hand_strength.is_high_card())
+
+    def test_is_high_hand_returns_false_for_invalid_high_card_hand(self):
+        self.assertFalse(self.not_valid_one_pair_hand_strength.is_high_card())

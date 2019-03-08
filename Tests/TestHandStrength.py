@@ -1,7 +1,7 @@
 from unittest import TestCase
 from card import Card
 from constants import Ranks, Suits
-from card_strength import CardStrength
+from hand_strength import CardStrength
 
 
 class TestRoyalFlush(TestCase):

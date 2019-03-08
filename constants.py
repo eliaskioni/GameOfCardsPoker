@@ -22,3 +22,22 @@ class Suits(Enum):
     HEARTS = 'H'
     SPADES = 'S'
     DIAMONDS = 'D'
+
+
+class HandsName(Enum):
+
+    ROYAL_FLUSH = 'ROYAL FLUSH'
+    STRAIGHT_FLUSH = 'STRAIGHT FLUSH'
+    FOUR_OF_A_KIND = 'FOUR OF A KIND'
+    FULL_HOUSE = 'FULL HOUSE'
+    FLUSH = 'FLUSH'
+    STRAIGHT = 'STRAIGHT'
+    THREE_OF_A_KIND = 'THREE OF A KIND'
+    TWO_OF_A_KIND = 'TWO OF A KIND'
+    ONE_OF_A_PAIR = 'ONE OF A PAIR'
+    HIGH_CARD = 'HIGH CARD'
+
+
+LOWEST_CARD_RANK: int = 2
+
+HIGHEST_CARD_RANK: int = 14

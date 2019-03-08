@@ -110,3 +110,6 @@ class CardStrength(object):
         ranks = CardStrength.get_ranks_in_hand(self.cards)
         grouped_ranks = CardStrength.group_ranks_based_on_rank(ranks)
         return list(grouped_ranks.values()).count(1) == 3
+
+    def is_high_card(self):
+        return self.cards_of_the_same_rank(number_of_cards=1, groups=5)

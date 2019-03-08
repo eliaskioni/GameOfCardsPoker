@@ -64,3 +64,6 @@ class CardStrength(object):
 
     def is_four_of_a_kind(self):
         return self.cards_of_the_same_rank(4)
+
+    def is_full_house(self):
+        return self.cards_of_the_same_rank(3) and self.cards_of_the_same_rank(2)

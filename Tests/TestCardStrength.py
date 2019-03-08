@@ -117,3 +117,29 @@ class TestFullHouse(TestCase):
 
     def test_not_is_full_house_returns_true_for_valid_full_house_hand(self):
         self.assertFalse(self.not_valid_full_house_hand.is_full_house())
+
+
+class TestFlush(TestCase):
+
+    def setUp(self):
+        self.flush_hand: list = [Card(rank=Ranks.K.value, suit=Suits.HEARTS.value),
+                                 Card(rank=Ranks.Q.value, suit=Suits.HEARTS.value),
+                                 Card(rank=Ranks.TWO.value, suit=Suits.HEARTS.value),
+                                 Card(rank=Ranks.FIVE.value, suit=Suits.HEARTS.value),
+                                 Card(rank=Ranks.FOUR.value, suit=Suits.HEARTS.value)]
+
+        self.not_flush_hand: list = [Card(rank=Ranks.A.value, suit=Suits.HEARTS.value),
+                                     Card(rank=Ranks.K.value, suit=Suits.HEARTS.value),
+                                     Card(rank=Ranks.Q.value, suit=Suits.HEARTS.value),
+                                     Card(rank=Ranks.J.value, suit=Suits.HEARTS.value),
+                                     Card(rank=Ranks.TEN.value, suit=Suits.HEARTS.value)]
+
+        self.hand_strength = CardStrength(self.flush_hand)
+
+        self.not_valid_flush_hand_strength = CardStrength(self.not_flush_hand)
+
+    def test_is_flush_returns_true_for_valid_flush_hand(self):
+        self.assertTrue(self.hand_strength.is_flush())
+
+    def test_is_flush_returns_false_for_invalid_flush_hand(self):
+        self.assertFalse(self.not_valid_flush_hand_strength.is_flush())

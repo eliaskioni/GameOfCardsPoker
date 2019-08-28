@@ -20,8 +20,11 @@ class Game(object):
             raw_rank = int(raw_card[0:length - 1])
             raw_suit = raw_card[length - 1:]
             self.cards.append(Card(rank=raw_rank, suit=raw_suit))
-        self.make_hand()
-        print(self.get_hand_strength())
+        if len(self.cards) != 5:
+            print('Not valid')
+        else:
+            self.make_hand()
+            print(self.get_hand_strength())
 
     def make_hand(self):
         self.hand = Hand(first_card=self.cards[0],
